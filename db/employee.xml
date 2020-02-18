@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="employee" author="dhanalakshmi">
+        <createTable tableName="employee">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="emp_id" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_no" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint constraintName="employee_emp_id_unique" columnNames="emp_id" tableName="employee"/>
+        <addUniqueConstraint constraintName="employee_email_unique" columnNames="email" tableName="employee"/>
+    </changeSet>  
+
+    <changeSet id="skills" author="dhanalakshmi">
+        <createTable tableName="skills">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint constraintName="skill_name" columnNames="name" tableName="skills"/>
+    </changeSet>  
+
+    <changeSet id="employee_skills" author="dhanalakshmi">
+        <createTable tableName="employee_skills">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="employee_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="skill_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employee_skills"
+            constraintName="employee_skills_emp_id_fk" referencedColumnNames="id" referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="skill_id" baseTableName="employee_skills"
+            constraintName="employee_skills_skill_id_fk" referencedColumnNames="id" referencedTableName="skills"/>
+    </changeSet>
+</databaseChangeLog>

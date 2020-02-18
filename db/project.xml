@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="project" author="dhanalakshmi">
+        <createTable tableName="project">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="int">
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="client_id" baseTableName="project"
+            constraintName="client_id_fk" referencedColumnNames="id" referencedTableName="client"/>
+
+        <createTable tableName="project_allocation">
+            <column name="employee_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="likely_end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="project_allocation" 
+            constraintName="emp_id_fk" referencedColumnNames="id" referencedTableName="employee"/>
+            
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_allocation"
+            constraintName="project_id_fk" referencedColumnNames="id" referencedTableName="project"/>
+    </changeSet>
+</databaseChangeLog>
